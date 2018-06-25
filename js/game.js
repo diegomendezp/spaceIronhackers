@@ -14,6 +14,7 @@ Game.prototype.start = function(delta) {
     if (this.isCollision()) {
       this.gameOver();
     }*/
+  this.isCollisionInvader()
   window.requestAnimationFrame(this.start.bind(this));
 };
 
@@ -37,42 +38,19 @@ Game.prototype.reset = function() {
   this.background = new Background(this);
   this.player = new Player(this);
   this.invaders = [];
-  this.generateInvaders();
+  this.generateInvaders(); 
 };
 
-Game.prototype.isCollision = function() {
-  return this.obstacles.some(
-    function(obstacle) {
-      return (
-        this.player.x + this.player.w >= obstacle.x &&
-        this.player.x < obstacle.x + obstacle.w &&
-        ((this.player.y + this.player.h > obstacle.topPosition &&
-          this.player.y < obstacle.topPosition + obstacle.topHeight) ||
-          (this.player.y + this.player.h > obstacle.bottomPosition &&
-            this.player.y < obstacle.bottomPosition + obstacle.bottomHeight))
-      );
-    }.bind(this)
-  );
-};
 
-Game.prototype.clearObstacles = function() {
-  this.obstacles = this.obstacles.filter(function(obstacle) {
-    return obstacle.x >= 0;
-  });
-};
-
-Game.prototype.generateObstacle = function() {
-  this.obstacles.push(new Obstacle(this));
-};
 Game.prototype.generateInvaders = function() {
-  var pos1 = 275;
-  var pos2 = 275;
+  var pos1 = 200;
+  var pos2 = 200;
   for (var i = 0; i < INVADERS; i++) {
     if (i % 2 == 0) {
-      this.invaders.push(new Invader(this, 100 + pos1, 0));
+      this.invaders.push(new Invader(this, 100 + pos1, 0, this.player));
       pos1 += 75;
     } else {
-      this.invaders.push(new Invader(this, 100 + pos2, 70));
+      this.invaders.push(new Invader(this, 100 + pos2, 70, this.player));
       pos2 += 75;
     }
   }
@@ -99,4 +77,14 @@ Game.prototype.moveAll = function(delta) {
   });
 };
 
-var INVADERS = 8;
+Game.prototype.isCollisionInvader = function(){
+  var invaders = this.invaders;
+  this.invaders.forEach(function(invader){
+    if(invader.isCollision()){
+      invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet), 1)
+      invaders.splice(invaders.indexOf(invader), 1);
+    }
+  })
+}
+
+var INVADERS = 10;

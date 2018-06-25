@@ -52,13 +52,13 @@ Player.prototype.setListeners = function() {
     if(event.keyCode == RIGHT){
       this.vx = 0; 
     }
+   
   }.bind(this)
 };
 
 Player.prototype.shoot = function() {
   var bullet = new Bullet(this.game, this.x + this.w/2, this.y + this.h -70);
-
-  this.bullets.push(bullet);
+  this.bullets.push(bullet); 
 };
 
 
