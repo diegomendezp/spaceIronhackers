@@ -1,4 +1,4 @@
-function Player(game, invaders) {
+function Player(game, invaders, lifes) {
   this.game = game;
   this.x = 475;
   this.y = 600;
@@ -9,7 +9,7 @@ function Player(game, invaders) {
   this.vx = 0;
   this.bullets = [];
   this.setListeners();
-  this.lives = 5;
+  this.lifes = lifes;
   this.bullet;
   this.invaders = invaders;
 }

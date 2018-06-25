@@ -21,7 +21,7 @@ Game.prototype.start = function(delta) {
   if(this.invaders.length == 0){
     this.youWin()
   }
-  if(this.player.lives == 0){
+  if(this.player.lifes == 0){
     this.gameOver()
   }
   window.requestAnimationFrame(this.start.bind(this));
@@ -56,10 +56,11 @@ Game.prototype.youWin = function() {
 };
 
 Game.prototype.reset = function() {
-  this.framesCounter = 0
+  this.framesCounter = 0;
+  this.score =0;
   this.background = new Background(this);
   this.invaders = [];
-  this.player = new Player(this, this.invaders);
+  this.player = new Player(this, this.invaders, PLAYERLIFES);
   this.generateInvaders();
 };
 
@@ -67,7 +68,7 @@ Game.prototype.generateInvaders = function() {
   var pos1 = 200;
   var pos2 = 200;
   for (var i = 0; i < INVADERS; i++) {
-    if (i % 2 == 0) {
+    if (i % ROWS== 0) {
       this.invaders.push(new Invader(this, 100 + pos1, 0, this.player));
       pos1 += 75;
     } else {
@@ -87,6 +88,12 @@ Game.prototype.draw = function() {
   this.invaders.forEach(element => {
     element.draw();
   });
+  this.ctx.font = "30px sans-serif";
+  this.ctx.fillStyle = "white";
+  this.ctx.fillText("LIFES: "+this.player.lifes, 20, 50);
+  this.ctx.font = "30px sans-serif";
+  this.ctx.fillStyle = "white";
+  this.ctx.fillText("SCORE: "+this.score, 850, 50);
 };
 
 Game.prototype.moveAll = function(delta) {
@@ -103,6 +110,7 @@ Game.prototype.isCollisionInvader = function() {
     if (invader.isCollision()) {
       invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
       invaders.splice(invaders.indexOf(invader), 1);
+      this.score+=10;
     }
   });
 };
@@ -110,7 +118,7 @@ Game.prototype.isCollisionInvader = function() {
 Game.prototype.isCollisionPlayer = function() {
   if(this.player.isCollision()){
     this.player.invader.bullets.splice(this.player.invader.bullets.indexOf(this.player.bullet),1);
-    this.player.lives--;
+    this.player.lifes--;
   }
 };
 
@@ -119,4 +127,6 @@ Game.prototype.invaderShoot = function() {
   this.invaders[random].shoot();
 };
 
-var INVADERS = 10;
+var INVADERS = 12;
+var PLAYERLIFES = 3;
+var ROWS = 2;
