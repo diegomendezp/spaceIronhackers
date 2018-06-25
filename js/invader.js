@@ -1,12 +1,17 @@
-function Invader(game, x, y, player) {
+function Invader(game, x, y, player, type) {
   this.game = game;
   this.player = player
   this.w = 70;
   this.h = 70;
 
-  this.dy = 0.25;
+  this.dy = 0.09;
   this.img = new Image()
-  this.img.src = "images/invader.png"
+  if(type==1){
+    this.img.src = "images/invader.png"
+  } else if(type ==2){
+    this.img.src = "images/invader2.png"
+  }
+  
   this.x = x ;
   this.y = y;
   this.bullet;

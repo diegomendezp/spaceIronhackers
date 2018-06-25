@@ -11,7 +11,7 @@ Game.prototype.start = function(delta) {
     this.framesCounter = 0;
   }
 
-  if (this.framesCounter % 60 === 0) {
+  if (this.framesCounter % 30 === 0) {
     this.invaderShoot();
   }
   this.draw();
@@ -69,10 +69,10 @@ Game.prototype.generateInvaders = function() {
   var pos2 = 200;
   for (var i = 0; i < INVADERS; i++) {
     if (i % ROWS== 0) {
-      this.invaders.push(new Invader(this, 100 + pos1, 0, this.player));
+      this.invaders.push(new Invader(this, 100 + pos1, 0, this.player, 1));
       pos1 += 75;
     } else {
-      this.invaders.push(new Invader(this, 100 + pos2, 70, this.player));
+      this.invaders.push(new Invader(this, 100+ pos2, 70, this.player, 2));
       pos2 += 75;
     }
   }
@@ -108,9 +108,9 @@ Game.prototype.isCollisionInvader = function() {
   var invaders = this.invaders;
   this.invaders.forEach(function(invader) {
     if (invader.isCollision()) {
+      this.score+=10;
       invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
       invaders.splice(invaders.indexOf(invader), 1);
-      this.score+=10;
     }
   });
 };
@@ -127,6 +127,6 @@ Game.prototype.invaderShoot = function() {
   this.invaders[random].shoot();
 };
 
-var INVADERS = 12;
+var INVADERS = 8;
 var PLAYERLIFES = 3;
 var ROWS = 2;

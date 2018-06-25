@@ -1,9 +1,9 @@
 function Player(game, invaders, lifes) {
   this.game = game;
   this.x = 475;
-  this.y = 600;
+  this.y = 625;
   this.img = new Image();
-  this.img.src = "images/player.png";
+  this.img.src = "images/player2.png";
   this.w = 60;
   this.h = 60;
   this.vx = 0;
