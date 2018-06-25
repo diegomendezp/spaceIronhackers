@@ -6,24 +6,45 @@ function Game(canvasId) {
 
 Game.prototype.start = function(delta) {
   this.clear();
+  this.framesCounter++;
+  if (this.framesCounter > 1000) {
+    this.framesCounter = 0;
+  }
+
+  if (this.framesCounter % 60 === 0) {
+    this.invaderShoot();
+  }
   this.draw();
   this.moveAll(delta);
-  /*
-    this.clearObstacles();
-    
-    if (this.isCollision()) {
-      this.gameOver();
-    }*/
-  this.isCollisionInvader()
+  this.isCollisionInvader();
+  this.isCollisionPlayer();
+  if(this.invaders.length == 0){
+    this.youWin()
+  }
+  if(this.player.lives == 0){
+    this.gameOver()
+  }
   window.requestAnimationFrame(this.start.bind(this));
 };
 
 Game.prototype.gameOver = function() {
   if (
     confirm(
-      "GAME OVER. Your score is: " +
-        Math.floor(this.score.toFixed(0)) +
-        " points. Play again?"
+      "GAME OVER. Play again?"
+    )
+  ) {
+    this.reset();
+    this.start.bind(this);
+  } else {
+    location.reload();
+    window.scrollTo(0, -document.body.scrollHeight);
+  }
+};
+
+Game.prototype.youWin = function() {
+  if (
+    confirm(
+      "You win. Play again?"
     )
   ) {
     this.reset();
@@ -35,12 +56,12 @@ Game.prototype.gameOver = function() {
 };
 
 Game.prototype.reset = function() {
+  this.framesCounter = 0
   this.background = new Background(this);
-  this.player = new Player(this);
   this.invaders = [];
-  this.generateInvaders(); 
+  this.player = new Player(this, this.invaders);
+  this.generateInvaders();
 };
-
 
 Game.prototype.generateInvaders = function() {
   var pos1 = 200;
@@ -66,7 +87,6 @@ Game.prototype.draw = function() {
   this.invaders.forEach(element => {
     element.draw();
   });
-  
 };
 
 Game.prototype.moveAll = function(delta) {
@@ -77,14 +97,26 @@ Game.prototype.moveAll = function(delta) {
   });
 };
 
-Game.prototype.isCollisionInvader = function(){
+Game.prototype.isCollisionInvader = function() {
   var invaders = this.invaders;
-  this.invaders.forEach(function(invader){
-    if(invader.isCollision()){
-      invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet), 1)
+  this.invaders.forEach(function(invader) {
+    if (invader.isCollision()) {
+      invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
       invaders.splice(invaders.indexOf(invader), 1);
     }
-  })
-}
+  });
+};
+
+Game.prototype.isCollisionPlayer = function() {
+  if(this.player.isCollision()){
+    this.player.invader.bullets.splice(this.player.invader.bullets.indexOf(this.player.bullet),1);
+    this.player.lives--;
+  }
+};
+
+Game.prototype.invaderShoot = function() {
+  var random = Math.floor(Math.random() * this.invaders.length);
+  this.invaders[random].shoot();
+};
 
 var INVADERS = 10;
