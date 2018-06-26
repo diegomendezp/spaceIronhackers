@@ -11,13 +11,14 @@ Game.prototype.start = function(delta) {
     this.framesCounter = 0;
   }
 
-  if (this.framesCounter % 30 === 0) {
+  if (this.framesCounter % 40 === 0) {
     this.invaderShoot();
   }
   this.draw();
   this.moveAll(delta);
   this.isCollisionInvader();
   this.isCollisionPlayer();
+  this.isCollisionObstacle()
   if(this.invaders.length == 0){
     this.youWin()
   }
@@ -60,8 +61,10 @@ Game.prototype.reset = function() {
   this.score =0;
   this.background = new Background(this);
   this.invaders = [];
+  this.obstacles = []
   this.player = new Player(this, this.invaders, PLAYERLIFES);
   this.generateInvaders();
+  this.generateObstacles();
 };
 
 Game.prototype.generateInvaders = function() {
@@ -78,6 +81,22 @@ Game.prototype.generateInvaders = function() {
   }
 };
 
+Game.prototype.generateObstacles = function() {
+  for(var j = 0; j<2; j++){
+    this.obstacles.push(new Obstacle(this, 200*j + this.canvas.width/2 - 150, 500, this.player))
+  }
+};
+
+Game.prototype.isCollisionObstacle =  function(){
+  var obstacles = this.obstacles;
+  this.obstacles.forEach(function(obstacle) {
+    if(obstacle.isCollision()){
+      obstacle.player.bullets.splice(obstacle.player.bullets.indexOf(obstacle.bullet), 1)
+      obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square), 1)
+    }
+  })  
+}
+
 Game.prototype.clear = function() {
   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 };
@@ -86,6 +105,9 @@ Game.prototype.draw = function() {
   this.background.draw();
   this.player.draw();
   this.invaders.forEach(element => {
+    element.draw();
+  });
+  this.obstacles.forEach(element => {
     element.draw();
   });
   this.ctx.font = "30px sans-serif";
@@ -127,6 +149,6 @@ Game.prototype.invaderShoot = function() {
   this.invaders[random].shoot();
 };
 
-var INVADERS = 8;
+var INVADERS = 10;
 var PLAYERLIFES = 3;
 var ROWS = 2;
