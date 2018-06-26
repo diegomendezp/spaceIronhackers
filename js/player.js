@@ -12,6 +12,7 @@ function Player(game, invaders, lifes) {
   this.lifes = lifes;
   this.bullet;
   this.invaders = invaders;
+  this.points = new Points(game,0)
 }
 
 Player.prototype.draw = function() {
@@ -26,6 +27,7 @@ Player.prototype.draw = function() {
     bullet.draw();
     bullet.move();
   });
+  this.points.draw()
 };
 
 Player.prototype.setListeners = function() {

@@ -1,7 +1,11 @@
 window.onload = function() {
-  document.getElementById("start-button").onclick = function() {
+  $("#canvas").hide()
+  document.getElementById("level-1").onclick = function() {
     //window.scrollTo(0,document.body.scrollHeight);
+    $("#menu").hide()
     $("#start-button").hide()
+    $("#canvas").show("slow")
+    
     startGame();
     
   };
@@ -9,7 +13,6 @@ window.onload = function() {
 
   function startGame() {
     var game = new Game("canvas");
-    //game.start();
     window.requestAnimationFrame(game.start.bind(game))
   }
 

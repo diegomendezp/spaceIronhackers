@@ -21,6 +21,7 @@ Game.prototype.start = function(delta) {
   this.isCollisionInvader();
   this.isCollisionPlayer();
   this.isCollisionObstacle()
+  this.isCollisionObstacle2()
   if(this.invaders.length == 0){
     this.youWin()
   }
@@ -70,9 +71,9 @@ Game.prototype.reset = function() {
 };
 
 Game.prototype.generateInvaders = function() {
-  var pos1 = (70*(INVADERS/2)+75*(INVADERS/2-1)) ;
+  var pos1 = (70*(INVADERS/2)+75*(INVADERS/2-1)) -180;
   console.log(pos1)
-  var pos2 = (70*(INVADERS/2)+75*(INVADERS/2-1))
+  var pos2 = (70*(INVADERS/2)+75*(INVADERS/2-1)) -180;
   for (var i = 0; i < INVADERS; i++) {
     if (i % ROWS == 0) {
       this.invaders.push(new Invader(this, pos1, 0, this.player, 1));
@@ -85,8 +86,8 @@ Game.prototype.generateInvaders = function() {
 };
 
 Game.prototype.generateObstacles = function() {
-  for(var j = 0; j<2; j++){
-    this.obstacles.push(new Obstacle(this, 200*j + this.canvas.width/2 - 150, 500, this.player, this.invaders))
+  for(var j = 0; j<3; j++){
+    this.obstacles.push(new Obstacle(this, 150*j -125+ this.canvas.width/2 - 50, 500, this.player, this.invaders))
   }
 };
 
@@ -97,6 +98,16 @@ Game.prototype.isCollisionObstacle =  function(){
       obstacle.player.bullets.splice(obstacle.player.bullets.indexOf(obstacle.bullet), 1)
       obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square), 1)
     }
+    /*if(obstacle.isCollisionInvader()){
+      obstacle.invader.bullets.splice(obstacle.invader.bullets.indexOf(obstacle.bullet2), 1)
+      obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square2), 1)
+    }*/
+  })  
+}
+
+Game.prototype.isCollisionObstacle2 =  function(){
+  var obstacles = this.obstacles;
+  this.obstacles.forEach(function(obstacle) {
     if(obstacle.isCollisionInvader()){
       obstacle.invader.bullets.splice(obstacle.invader.bullets.indexOf(obstacle.bullet2), 1)
       obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square2), 1)
@@ -120,9 +131,6 @@ Game.prototype.draw = function() {
   this.ctx.font = "30px sans-serif";
   this.ctx.fillStyle = "white";
   this.ctx.fillText("LIFES: "+this.player.lifes, 20, 50);
-  this.ctx.font = "30px sans-serif";
-  this.ctx.fillStyle = "white";
-  this.ctx.fillText("SCORE: "+this.score, 850, 50);
 };
 
 Game.prototype.moveAll = function(delta) {
@@ -163,6 +171,6 @@ Game.prototype.invaderFall = function (){
 }
 
 
-var INVADERS = 6;
+var INVADERS = 8;
 var PLAYERLIFES = 3;
 var ROWS = 2;

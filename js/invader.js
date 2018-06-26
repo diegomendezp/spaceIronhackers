@@ -24,6 +24,7 @@ Invader.prototype.isCollision = function (){
     if(((this.x <= arr[i].x + arr[i].r*2 &&arr[i].x +arr[i].r*2 <= this.x + this.w) &&
     this.y+ this.h>=arr[i].y)){
       this.bullet = arr[i]
+      this.player.points.increment()
       return true;
     }
   }
