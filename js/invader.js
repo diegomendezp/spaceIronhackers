@@ -50,6 +50,6 @@ Invader.prototype.move = function() {
 };
 
 Invader.prototype.shoot = function() {
-    var bullet = new InvaderBullet(this.game, this.x + this.w/2, this.y + this.h);
+    var bullet = new Bullet(this.game, this.x + this.w/2, this.y + this.h, 5, 1, 0.15, "red", "invader");
     this.bullets.push(bullet); 
 };

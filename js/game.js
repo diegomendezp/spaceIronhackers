@@ -10,8 +10,10 @@ Game.prototype.start = function(delta) {
   if (this.framesCounter > 1000) {
     this.framesCounter = 0;
   }
-
-  if (this.framesCounter % 40 === 0) {
+  if (this.framesCounter % 250 === 0) {
+    this.invaderFall()
+  }
+  if (this.framesCounter % 50 === 0) {
     this.invaderShoot();
   }
   this.draw();
@@ -68,14 +70,15 @@ Game.prototype.reset = function() {
 };
 
 Game.prototype.generateInvaders = function() {
-  var pos1 = 200;
-  var pos2 = 200;
+  var pos1 = (70*(INVADERS/2)+75*(INVADERS/2-1)) ;
+  console.log(pos1)
+  var pos2 = (70*(INVADERS/2)+75*(INVADERS/2-1))
   for (var i = 0; i < INVADERS; i++) {
-    if (i % ROWS== 0) {
-      this.invaders.push(new Invader(this, 100 + pos1, 0, this.player, 1));
-      pos1 += 75;
+    if (i % ROWS == 0) {
+      this.invaders.push(new Invader(this, pos1, 0, this.player, 1));
+       pos1 += 75;
     } else {
-      this.invaders.push(new Invader(this, 100+ pos2, 70, this.player, 2));
+      this.invaders.push(new Invader(this, pos2, 70, this.player, 2));
       pos2 += 75;
     }
   }
@@ -83,16 +86,20 @@ Game.prototype.generateInvaders = function() {
 
 Game.prototype.generateObstacles = function() {
   for(var j = 0; j<2; j++){
-    this.obstacles.push(new Obstacle(this, 200*j + this.canvas.width/2 - 150, 500, this.player))
+    this.obstacles.push(new Obstacle(this, 200*j + this.canvas.width/2 - 150, 500, this.player, this.invaders))
   }
 };
 
 Game.prototype.isCollisionObstacle =  function(){
   var obstacles = this.obstacles;
   this.obstacles.forEach(function(obstacle) {
-    if(obstacle.isCollision()){
+    if(obstacle.isCollisionPlayer()){
       obstacle.player.bullets.splice(obstacle.player.bullets.indexOf(obstacle.bullet), 1)
       obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square), 1)
+    }
+    if(obstacle.isCollisionInvader()){
+      obstacle.invader.bullets.splice(obstacle.invader.bullets.indexOf(obstacle.bullet2), 1)
+      obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square2), 1)
     }
   })  
 }
@@ -149,6 +156,13 @@ Game.prototype.invaderShoot = function() {
   this.invaders[random].shoot();
 };
 
-var INVADERS = 10;
+Game.prototype.invaderFall = function (){
+  var random = Math.floor(Math.random() * this.invaders.length)
+  var invader = this.invaders[random]
+  invader.dy = 1;
+}
+
+
+var INVADERS = 6;
 var PLAYERLIFES = 3;
 var ROWS = 2;

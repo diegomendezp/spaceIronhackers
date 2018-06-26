@@ -4,8 +4,8 @@ function Player(game, invaders, lifes) {
   this.y = 625;
   this.img = new Image();
   this.img.src = "images/player2.png";
-  this.w = 60;
-  this.h = 60;
+  this.w = 80;
+  this.h = 80;
   this.vx = 0;
   this.bullets = [];
   this.setListeners();
@@ -59,10 +59,15 @@ Player.prototype.setListeners = function() {
 };
 
 Player.prototype.shoot = function() {
-  var bullet = new PlayerBullet(
+  var bullet = new Bullet(
     this.game,
     this.x + this.w / 2,
-    this.y + this.h - 70
+    this.y + this.h - 70,
+    6,
+    1,
+    0.25,
+    "white",
+    "player"
   );
   this.bullets.push(bullet);
 };
@@ -95,6 +100,6 @@ Player.prototype.isCollision = function() {
 };
 
 var SPACE = 32;
-var LEFT = 37; // left
-var RIGHT = 39; // right
+var LEFT = 65; // left
+var RIGHT = 68; // right
 var SPACE = 32;
