@@ -34,30 +34,24 @@ Game.prototype.start = function(delta) {
 };
 
 Game.prototype.gameOver = function() {
+  window.cancelAnimationFrame(this.id);
   if (confirm("GAME OVER. Play again?")) {
     this.reset();
     this.start.bind(this);
   } else {
     location.reload();
-    window.scrollTo(0, -document.body.scrollHeight);
   }
 };
 
 Game.prototype.youWin = function() {
   if (this.level == 1) {
-    this.showLevel()
+    this.showLevel();
     // window.cancelAnimationFrame(this.id);
-    if(this.win == 0)    
-      this.changeLevel()
+    if (this.win == 0) this.changeLevel();
   } else if (this.level == 2) {
-    /*this.clear();
-    this.level =3;
-    this.reset()
-    this.start.bind(this);*/
-    this.showLevel()
+    this.showLevel();
     // window.cancelAnimationFrame(this.id);
-    if(this.win == 0)    
-      this.changeLevel()
+    if (this.win == 0) this.changeLevel();
   }
   this.win++;
 };
@@ -85,7 +79,7 @@ Game.prototype.levels = function() {
       this.invaderAcc = 0.15;
       this.dyInvaderFall = 1;
       this.space = 300;
-      this.rows = 3
+      this.rows = 3;
       break;
     case 2:
       this.invadersNumber = 8;
@@ -95,7 +89,7 @@ Game.prototype.levels = function() {
       this.invaderAcc = 0.2;
       this.dyInvaderFall = 1.5;
       this.space = 200;
-      this.rows = 3
+      this.rows = 3;
       break;
     case 3:
       this.invadersNumber = 12;
@@ -104,18 +98,18 @@ Game.prototype.levels = function() {
       this.obstaclesNumber = 8;
       this.invaderAcc = 0.25;
       this.dyInvaderFall = 1.75;
-      this.space = 100
+      this.space = 100;
       this.rows = 4;
       break;
   }
 };
 
 Game.prototype.generateInvaders = function() {
-  var pos1, pos2,pos3;
-  if(this.invadersNumber == 6){
+  var pos1, pos2, pos3;
+  if (this.invadersNumber == 6) {
     pos1 = 260;
     pos2 = pos1;
-  } else if(this.invadersNumber == 8){
+  } else if (this.invadersNumber == 8) {
     pos1 = 185;
     pos2 = pos1;
   } else {
@@ -123,11 +117,10 @@ Game.prototype.generateInvaders = function() {
     pos2 = pos1;
   }
   for (var i = 0; i < this.invadersNumber; i++) {
-    for(var j = 0; j<this.rows; j++){
+    for (var j = 0; j < this.rows; j++) {
       this.invaders.push(
-        new Invader(this, pos1, 70*j, this.player, j, this.invaderAcc)
+        new Invader(this, pos1, 70 * j, this.player, j, this.invaderAcc)
       );
-      
     }
     pos1 += 75;
   }
@@ -135,26 +128,19 @@ Game.prototype.generateInvaders = function() {
 
 Game.prototype.generateObstacles = function() {
   var pos;
-  if(this.obstaclesNumber == 3){
-    pos = 130
+  if (this.obstaclesNumber == 3) {
+    pos = 130;
   }
-  if(this.obstaclesNumber == 6){
-    pos = 100
+  if (this.obstaclesNumber == 6) {
+    pos = 100;
   }
-  if(this.obstaclesNumber == 8){
-    pos = 100
+  if (this.obstaclesNumber == 8) {
+    pos = 100;
   }
-
 
   for (var j = 0; j < this.obstaclesNumber; j++) {
     this.obstacles.push(
-      new Obstacle(
-        this,
-        pos *j + this.space,
-        500,
-        this.player,
-        this.invaders
-      )
+      new Obstacle(this, pos * j + this.space, 500, this.player, this.invaders)
     );
   }
 };
@@ -250,20 +236,23 @@ Game.prototype.invaderFall = function() {
   }
 };
 
-Game.prototype.showLevel = function(){
+Game.prototype.showLevel = function() {
   this.ctx.font = "40px sans-serif";
   this.ctx.fillStyle = "white";
-  var level = this.level+1
-  this.ctx.fillText("LEVEL " + level,400, this.canvas.height/2);
-}
+  var level = this.level + 1;
+  this.ctx.fillText("LEVEL " + level, 400, this.canvas.height / 2);
+};
 
-Game.prototype.changeLevel = function(){
-  setTimeout(function(){
-    this.level++;
-    this.reset()
-    this.start.bind(this);
-  }.bind(this), 3000)
-}
+Game.prototype.changeLevel = function() {
+  setTimeout(
+    function() {
+      this.level++;
+      this.reset();
+      this.start.bind(this);
+    }.bind(this),
+    3000
+  );
+};
 
 var INVADERS = 8;
 var PLAYERLIFES = 3;

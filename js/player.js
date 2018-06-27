@@ -101,7 +101,9 @@ Player.prototype.isCollision = function() {
   return false;
 };
 
+
+var LEFT = 37; // left
+var RIGHT = 39; // right
 var SPACE = 32;
-var LEFT = 65; // left
-var RIGHT = 68; // right
-var SPACE = 32;
+var KEYA = 65;
+var KEYD = 68;
