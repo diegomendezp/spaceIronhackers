@@ -7,28 +7,32 @@ function Game(canvasId, level) {
 }
 
 Game.prototype.start = function(delta) {
-  this.clear();
-  this.framesCounter++;
-  if (this.framesCounter > 1000) {
-    this.framesCounter = 0;
-  }
-  if (this.framesCounter % this.framesFall === 0) {
-    this.invaderFall();
-  }
-  if (this.framesCounter % this.framesShoot === 0) {
-    this.invaderShoot();
-  }
-  this.draw();
-  this.moveAll(delta);
-  this.isCollisionInvader();
-  this.isCollisionPlayer();
-  this.isCollisionObstacle();
-  this.isCollisionObstacle2();
-  if (this.invaders.length == 0) {
-    this.youWin();
-  }
-  if (this.player.lifes == 0) {
-    this.gameOver();
+  if (this.level != 4) {
+    this.clear();
+    this.framesCounter++;
+    if (this.framesCounter > 1000) {
+      this.framesCounter = 0;
+    }
+    if (this.framesCounter % this.framesFall === 0) {
+      this.invaderFall();
+    }
+    if (this.framesCounter % this.framesShoot === 0) {
+      this.invaderShoot();
+    }
+    this.draw();
+    this.moveAll(delta);
+    this.isCollisionInvader();
+    this.isCollisionPlayer();
+    this.isCollisionObstacle();
+    this.isCollisionObstacle2();
+    if (this.invaders.length == 0) {
+      this.youWin();
+    }
+    if (this.player.lifes == 0) {
+      this.gameOver();
+    }
+  } else {
+    
   }
   this.id = window.requestAnimationFrame(this.start.bind(this));
 };
