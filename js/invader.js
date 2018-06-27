@@ -1,23 +1,28 @@
-function Invader(game, x, y, player, type, bulletAcc) {
+function Invader(game, x, y, w, h, player, type, bulletAcc, lifes) {
   this.game = game;
   this.player = player;
-  this.w = 70;
-  this.h = 70;
+  this.w = w;
+  this.h = h;
+  this.lifes = lifes;
+  this.type = type;
   this.bulletAcc = bulletAcc;
   this.dy = 0.09;
   this.img = new Image();
-  if (type == 0) {
+  if (this.type == 0) {
     this.bulletRadio = 5;
     this.img.src = "images/invader.png";
-  } else if (type == 1) {
+  } else if (this.type == 1) {
     this.bulletRadio = 5;
     this.img.src = "images/invader2.png";
-  } else if (type == 2) {
+  } else if (this.type == 2) {
     this.bulletRadio = 7;
     this.img.src = "images/invader3.png";
-  } else if (type == 3) {
+  } else if (this.type == 3) {
     this.bulletRadio = 10;
     this.img.src = "images/finalinvader.png";
+  } else if(this.type == 4){
+    this.bulletRadio = 10;
+    this.img.src = "images/spaceship.jpg";
   }
 
   this.x = x;
@@ -62,15 +67,53 @@ Invader.prototype.move = function() {
 };
 
 Invader.prototype.shoot = function() {
-  var bullet = new Bullet(
-    this.game,
-    this.x + this.w / 2,
-    this.y + this.h,
-    this.bulletRadio,
-    1,
-    this.bulletAcc,
-    "red",
-    "invader"
-  );
-  this.bullets.push(bullet);
+  var bullet;
+  var bullets = []
+  if(this.type != 4){
+    bullets.push(new Bullet(
+      this.game,
+      this.x + this.w / 2,
+      this.y + this.h,
+      this.bulletRadio,
+      1,
+      this.bulletAcc,
+      "red",
+      "invader"
+    ));
+  } else {
+    bullets.push(new Bullet(
+      this.game,
+      this.x + this.w / 2,
+      this.y + this.h,
+      this.bulletRadio,
+      1,
+      this.bulletAcc,
+      "red",
+      "invader"
+    ));
+    bullets.push(new Bullet(
+      this.game,
+      this.x + this.w,
+      this.y + this.h,
+      this.bulletRadio,
+      1,
+      this.bulletAcc,
+      "red",
+      "invader"
+    ));
+    bullets.push(new Bullet(
+      this.game,
+      this.x,
+      this.y + this.h,
+      this.bulletRadio,
+      1,
+      this.bulletAcc,
+      "red",
+      "invader"
+    ));
+  }
+  //this.bullets.push(bullet);
+  bullets.forEach(function(bullet){
+    this.bullets.push(bullet)
+  }.bind(this))
 };

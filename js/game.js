@@ -32,7 +32,7 @@ Game.prototype.start = function(delta) {
       this.gameOver();
     }
   } else {
-    
+    this.finalRound();
   }
   this.id = window.requestAnimationFrame(this.start.bind(this));
 };
@@ -56,6 +56,14 @@ Game.prototype.youWin = function() {
     this.showLevel();
     // window.cancelAnimationFrame(this.id);
     if (this.win == 0) this.changeLevel();
+  } else if(this.level == 3){
+    this.showLevel();
+    if (this.win == 0) this.changeLevel();
+  } else if(this.level == 4){
+    if (this.win == 0){
+      alert("You pass all the levels");
+      location.reload();
+    }
   }
   this.win++;
 };
@@ -105,27 +113,47 @@ Game.prototype.levels = function() {
       this.space = 100;
       this.rows = 4;
       break;
+    case 4:
+      this.invadersNumber = 1;
+      this.framesFall = 130;
+      this.framesShoot = 35;
+      this.obstaclesNumber = 8;
+      this.invaderAcc = 0.2;
+      this.dyInvaderFall = 1.75;
+      this.space = 100;
+      this.rows = 0;
+      break;
   }
 };
 
 Game.prototype.generateInvaders = function() {
-  var pos1, pos2, pos3;
+  var pos1;
+  var lifes = 0;
+  var w = 70;
+  var h = w;
   if (this.invadersNumber == 6) {
     pos1 = 260;
-    pos2 = pos1;
   } else if (this.invadersNumber == 8) {
     pos1 = 185;
-    pos2 = pos1;
   } else {
     pos1 = 40;
-    pos2 = pos1;
+  }
+  if(this.level == 4){
+    pos1 = 350;
+    lifes = 10;
+    w = 300;
+    h = 200; 
   }
   for (var i = 0; i < this.invadersNumber; i++) {
     for (var j = 0; j < this.rows; j++) {
-      this.invaders.push(
-        new Invader(this, pos1, 70 * j, this.player, j, this.invaderAcc)
-      );
+        this.invaders.push(
+          new Invader(this, pos1, 70 * j, w ,h, this.player, j, this.invaderAcc, lifes)
+        ); 
     }
+    if(this.level == 4){
+      console.log(this.level)
+      this.invaders.push(new Invader(this, pos1, 0, w ,h, this.player, 4, this.invaderAcc, lifes))
+    } 
     pos1 += 75;
   }
 };
@@ -206,13 +234,18 @@ Game.prototype.isCollisionInvader = function() {
   this.invaders.forEach(function(invader) {
     if (invader.isCollision()) {
       this.score += 10;
-      invader.player.bullets.splice(
-        invader.player.bullets.indexOf(invader.bullet),
-        1
-      );
-      invaders.splice(invaders.indexOf(invader), 1);
+      if(this.level != 4){
+        invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
+        invaders.splice(invaders.indexOf(invader), 1);
+      } else {
+        invader.lifes--;
+        invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
+        if(invader.lifes == 0){
+          this.youWin();
+        }
+      }
     }
-  });
+  }.bind(this));
 };
 
 Game.prototype.isCollisionPlayer = function() {
@@ -221,7 +254,11 @@ Game.prototype.isCollisionPlayer = function() {
       this.player.invader.bullets.indexOf(this.player.bullet),
       1
     );
-    this.player.lifes--;
+    if(this.level != 4){
+      this.player.lifes--;
+    } else {
+      this.gameOver()
+    } 
   }
 };
 
@@ -244,7 +281,12 @@ Game.prototype.showLevel = function() {
   this.ctx.font = "40px sans-serif";
   this.ctx.fillStyle = "white";
   var level = this.level + 1;
-  this.ctx.fillText("LEVEL " + level, 400, this.canvas.height / 2);
+  console.log(level)
+  if(level == 4){
+    this.ctx.fillText("FINAL ROUND ", 400, this.canvas.height / 2);
+  }else{
+    this.ctx.fillText("LEVEL " + level, 400, this.canvas.height / 2);
+  }
 };
 
 Game.prototype.changeLevel = function() {
@@ -257,6 +299,26 @@ Game.prototype.changeLevel = function() {
     3000
   );
 };
+
+Game.prototype.finalRound = function (){
+  this.clear();
+  this.framesCounter++;
+  if (this.framesCounter % this.framesShoot === 0) {
+    this.invaderShoot();
+  }
+  this.draw();
+  this.moveAll();
+  this.isCollisionInvader();
+  this.isCollisionPlayer();
+  this.isCollisionObstacle();
+  this.isCollisionObstacle2();
+  if (this.invaders.length == 0) {
+    this.youWin();
+  }
+  if (this.player.lifes == 0) {
+    this.gameOver();
+  }
+}
 
 var INVADERS = 8;
 var PLAYERLIFES = 3;
