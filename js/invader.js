@@ -17,7 +17,7 @@ function Invader(game, x, y, player, type, bulletAcc) {
     this.img.src = "images/invader3.png";
   } else if (type == 3) {
     this.bulletRadio = 10;
-    this.img.src = "images/finalInvader.png";
+    this.img.src = "images/finalinvader.png";
   }
 
   this.x = x;
