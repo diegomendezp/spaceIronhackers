@@ -2,6 +2,7 @@ function Game(canvasId, level) {
   this.canvas = document.getElementById(canvasId);
   this.ctx = this.canvas.getContext("2d");
   this.level = level;
+  this.id = 0;
   this.reset();
 }
 
@@ -29,7 +30,7 @@ Game.prototype.start = function(delta) {
   if (this.player.lifes == 0) {
     this.gameOver();
   }
-  window.requestAnimationFrame(this.start.bind(this));
+  this.id = window.requestAnimationFrame(this.start.bind(this));
 };
 
 Game.prototype.gameOver = function() {
@@ -44,16 +45,21 @@ Game.prototype.gameOver = function() {
 
 Game.prototype.youWin = function() {
   if (this.level == 1) {
-    this.clear();
-    this.level =2;
-    this.reset()
-    this.start.bind(this);
+    this.showLevel()
+    // window.cancelAnimationFrame(this.id);
+    if(this.win == 0)    
+      this.changeLevel()
   } else if (this.level == 2) {
-    this.clear();
+    /*this.clear();
     this.level =3;
     this.reset()
-    this.start.bind(this);
+    this.start.bind(this);*/
+    this.showLevel()
+    // window.cancelAnimationFrame(this.id);
+    if(this.win == 0)    
+      this.changeLevel()
   }
+  this.win++;
 };
 
 Game.prototype.reset = function() {
@@ -66,6 +72,7 @@ Game.prototype.reset = function() {
   this.player = new Player(this, this.invaders, PLAYERLIFES);
   this.generateInvaders();
   this.generateObstacles();
+  this.win = 0;
 };
 
 Game.prototype.levels = function() {
@@ -112,7 +119,7 @@ Game.prototype.generateInvaders = function() {
     pos1 = 185;
     pos2 = pos1;
   } else {
-    pos1 = 50;
+    pos1 = 40;
     pos2 = pos1;
   }
   for (var i = 0; i < this.invadersNumber; i++) {
@@ -242,6 +249,21 @@ Game.prototype.invaderFall = function() {
     invader.dy = this.dyInvaderFall;
   }
 };
+
+Game.prototype.showLevel = function(){
+  this.ctx.font = "40px sans-serif";
+  this.ctx.fillStyle = "white";
+  var level = this.level+1
+  this.ctx.fillText("LEVEL " + level,400, this.canvas.height/2);
+}
+
+Game.prototype.changeLevel = function(){
+  setTimeout(function(){
+    this.level++;
+    this.reset()
+    this.start.bind(this);
+  }.bind(this), 3000)
+}
 
 var INVADERS = 8;
 var PLAYERLIFES = 3;

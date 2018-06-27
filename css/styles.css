@@ -3,6 +3,7 @@ body{
   display: flex;
   max-width: 1200px;
   max-height: 980px;
+  justify-content: center;
 }
 
 #menu{

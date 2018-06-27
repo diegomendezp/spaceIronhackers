@@ -20,7 +20,7 @@ function Invader(game, x, y, player, type, bulletAcc) {
     this.img.src = "images/finalInvader.png"
   }
   
-  this.x = x ;
+  this.x = x;
   this.y = y;
   this.bullet;
   this.bullets = []

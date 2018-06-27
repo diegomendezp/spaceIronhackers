@@ -45,7 +45,7 @@ Obstacle.prototype.isCollisionPlayer = function() {
   var h = this.h;
   for (var i = 0; i < this.player.bullets.length; i++) {
     for(var j=0; j<squares.length;j++){
-      if (squares[j].x <= arr[i].x + arr[i].r * 2 && arr[i].x + arr[i].r * 2 <= squares[j].x + w && arr[i].y <= squares[j].y + h  ) {
+      if(squares[j].x < arr[i].x + arr[i].r * 2 && squares[j].x + w > arr[i].x && squares[j].y < arr[i].y + arr[i].r && squares[j].y + h > arr[i].y){
         this.bullet = arr[i];
         this.square = squares[j];
         return true;
@@ -63,7 +63,7 @@ Obstacle.prototype.isCollisionInvader = function(){
   for(var i = 0; i < arr.length; i++){
     for (var j = 0; j<arr[i].bullets.length; j++) {
       for(var k=0; k<squares.length;k++){
-        if (squares[k].x <= arr[i].bullets[j].x + arr[i].bullets[j].r * 2 && arr[i].bullets[j].x + arr[i].bullets[j].r * 2 <= squares[k].x + w && squares[k].y  <= arr[i].bullets[j].y) {
+        if(squares[k].x < arr[i].bullets[j].x + arr[i].bullets[j].r * 2 && squares[k].x + w > arr[i].bullets[j].x && squares[k].y < arr[i].bullets[j].y + arr[i].bullets[j].r && squares[k].y + h < arr[i].bullets[j].y){
           this.bullet2 = arr[i].bullets[j]
           this.invader = arr[i]
           this.square2 = squares[k];
