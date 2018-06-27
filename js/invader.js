@@ -1,15 +1,23 @@
-function Invader(game, x, y, player, type) {
+function Invader(game, x, y, player, type, bulletAcc) {
   this.game = game;
   this.player = player
   this.w = 70;
   this.h = 70;
-
+  this.bulletAcc = bulletAcc;
   this.dy = 0.09;
   this.img = new Image()
-  if(type==1){
+  if(type==0){
+    this.bulletRadio = 5;
     this.img.src = "images/invader.png"
-  } else if(type ==2){
+  } else if(type ==1){
+    this.bulletRadio = 5;
     this.img.src = "images/invader2.png"
+  } else if(type ==2){
+    this.bulletRadio = 7;
+    this.img.src = "images/invader3.png"
+  } else if(type ==3){
+    this.bulletRadio = 10;
+    this.img.src = "images/finalInvader.png"
   }
   
   this.x = x ;
@@ -51,6 +59,6 @@ Invader.prototype.move = function() {
 };
 
 Invader.prototype.shoot = function() {
-    var bullet = new Bullet(this.game, this.x + this.w/2, this.y + this.h, 5, 1, 0.15, "red", "invader");
+    var bullet = new Bullet(this.game, this.x + this.w/2, this.y + this.h, this.bulletRadio, 1, this.bulletAcc, "red", "invader");
     this.bullets.push(bullet); 
 };
