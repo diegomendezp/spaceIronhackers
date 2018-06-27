@@ -283,7 +283,7 @@ Game.prototype.showLevel = function() {
   var level = this.level + 1;
   console.log(level)
   if(level == 4){
-    this.ctx.fillText("FINAL ROUND ", 400, this.canvas.height / 2);
+    this.ctx.fillText("FINAL ROUND ", 350, this.canvas.height / 2);
   }else{
     this.ctx.fillText("LEVEL " + level, 400, this.canvas.height / 2);
   }

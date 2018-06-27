@@ -22,7 +22,7 @@ function Invader(game, x, y, w, h, player, type, bulletAcc, lifes) {
     this.img.src = "images/finalinvader.png";
   } else if(this.type == 4){
     this.bulletRadio = 10;
-    this.img.src = "images/spaceship.jpg";
+    this.img.src = "images/spaceship.png";
   }
 
   this.x = x;
