@@ -43,16 +43,16 @@ Game.prototype.gameOver = function() {
 };
 
 Game.prototype.youWin = function() {
-  $("#canvas").hide();
-  $("#menu").show();
   if (this.level == 1) {
     this.clear();
-    location.reload();
-    //$("#level-2").removeClass("block");
+    this.level =2;
+    this.reset()
+    this.start.bind(this);
   } else if (this.level == 2) {
     this.clear();
-    location.reload();
-    //$("#level-3").removeClass("block");
+    this.level =3;
+    this.reset()
+    this.start.bind(this);
   }
 };
 
@@ -115,20 +115,6 @@ Game.prototype.generateInvaders = function() {
     pos1 = 50;
     pos2 = pos1;
   }
-    
-  /*for (var i = 0; i < this.invadersNumber; i++) {
-    if (i % ROWS == 0) {
-      this.invaders.push(
-        new Invader(this, pos1, 0, this.player, 1, this.invaderAcc)
-      );
-      pos1 += 75;
-    } else {
-      this.invaders.push(
-        new Invader(this, pos2, 70, this.player, 2, this.invaderAcc)
-      );
-      pos2 += 75;
-    }
-  }*/
   for (var i = 0; i < this.invadersNumber; i++) {
     for(var j = 0; j<this.rows; j++){
       this.invaders.push(
@@ -176,10 +162,6 @@ Game.prototype.isCollisionObstacle = function() {
       );
       obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square), 1);
     }
-    /*if(obstacle.isCollisionInvader()){
-      obstacle.invader.bullets.splice(obstacle.invader.bullets.indexOf(obstacle.bullet2), 1)
-      obstacle.squares.splice(obstacle.squares.indexOf(obstacle.square2), 1)
-    }*/
   });
 };
 
