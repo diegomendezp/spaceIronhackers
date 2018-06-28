@@ -23,7 +23,6 @@ Bullet.prototype.move = function() {
     case "player":
       this.vy += this.a;
       this.y -= this.vy;
-
       if (this.y > this.game.player.y + this.game.player.h) {
         this.vy *= -1;
       }
