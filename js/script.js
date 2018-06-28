@@ -14,11 +14,17 @@ window.onload = function() {
     $("#canvas").show("slow")
     startGame(2);
     
-  };  
+  }; 
+  
   document.getElementById("level-3").onclick = function() {
     $("#menu").hide()
     $("#canvas").show("slow")
     startGame(3);
+  };  
+  document.getElementById("final-round").onclick = function() {
+    $("#menu").hide()
+    $("#canvas").show("slow")
+    startGame(4);
   };  
   function startGame(level) {
     var game = new Game("canvas", level);

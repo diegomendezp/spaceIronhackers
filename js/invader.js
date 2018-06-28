@@ -22,6 +22,8 @@ function Invader(game, x, y, w, h, player, type, bulletAcc, lifes) {
     this.img.src = "images/finalinvader.png";
   } else if(this.type == 4){
     this.bulletRadio = 10;
+    this.dx=2;
+    this.dy = 0.15
     this.img.src = "images/spaceship.png";
   }
 
@@ -64,10 +66,18 @@ Invader.prototype.draw = function() {
 Invader.prototype.move = function() {
   this.y += this.dy;
   if (this.y > this.game.player.y - 70) this.game.gameOver();
+  if(this.type == 4){
+    this.x += this.dx;
+    if(this.x > 700){
+      this.dx *= -1
+    } else if(this.x < 0){
+      this.dx *= -1
+    }
+  }
 };
 
 Invader.prototype.shoot = function() {
-  var bullet;
+  //var bullet;
   var bullets = []
   if(this.type != 4){
     bullets.push(new Bullet(
@@ -81,7 +91,7 @@ Invader.prototype.shoot = function() {
       "invader"
     ));
   } else {
-    bullets.push(new Bullet(
+    /*bullets.push(new Bullet(
       this.game,
       this.x + this.w / 2,
       this.y + this.h,
@@ -90,7 +100,7 @@ Invader.prototype.shoot = function() {
       this.bulletAcc,
       "red",
       "invader"
-    ));
+    ));*/
     bullets.push(new Bullet(
       this.game,
       this.x + this.w,
