@@ -82,6 +82,7 @@ Player.prototype.move = function(time) {
   this.x += this.vx;
 };
 
+
 Player.prototype.isCollision = function() {
   var arr = this.invaders;
   var x = this.x;
