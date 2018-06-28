@@ -46,9 +46,7 @@ Player.prototype.setListeners = function() {
         this.vx = +10;
       }
     }
-    if (event.keyCode == SPACE) {
-      this.shoot();
-    }
+    
   }.bind(this);
   document.onkeyup = function(event) {
     if (event.keyCode == LEFT) {
@@ -56,6 +54,9 @@ Player.prototype.setListeners = function() {
     }
     if (event.keyCode == RIGHT) {
       this.vx = 0;
+    }
+    if (event.keyCode == SPACE) {
+      this.shoot();
     }
   }.bind(this);
 };
