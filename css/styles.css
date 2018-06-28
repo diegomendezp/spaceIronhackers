@@ -7,13 +7,13 @@ body{
   align-items: center;
   text-align: center;
   padding: 0;
-  margin-top: 5%;
+  margin-top: 25%;
   /*background-color: black;*/
   background-image: url("../images/bg.png")
 }
 
 #menu{
-  display: flex;
+  display: block;
   justify-content: center;
   /*align-items: center;*/
   width: 100%;
@@ -24,20 +24,7 @@ body{
 
 canvas{
   display: block;
-}
-button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
-  margin: 0 auto;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: block;
-  width: 250px;
-  height: 100px;
-  font-size: 16px;
-
+  margin-top: -300px;
 }
 
 .block{
@@ -47,6 +34,7 @@ button {
 
 .game-intro {
   padding: 0% 10%;
+  
 }
 
 .game-intro p {
@@ -61,6 +49,7 @@ button {
 }
 
 .arrows-img {
+  margin-bottom: 20px;
   width: 150px;
 }
 

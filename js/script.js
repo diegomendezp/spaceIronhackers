@@ -11,28 +11,39 @@ window.onload = function() {
   loadSound()
   $("#canvas").hide();
   document.getElementById("level-1").onclick = function() {
-    //window.scrollTo(0,document.body.scrollHeight);
     $("#menu").hide();
-    //$("#level-1").hide()
+    $(".game-intro").hide();
     $("#canvas").show("slow");
     playSound()
     startGame(1);
   };
-  //startGame();
+  document.getElementById("start-button").onclick = function() {
+    $("#menu").hide();
+    $(".game-intro").hide();
+    $("#canvas").show("slow");
+    playSound()
+    startGame(1);
+  };
   document.getElementById("level-2").onclick = function() {
     $("#menu").hide();
+    $(".game-intro").hide();
     $("#canvas").show("slow");
+    playSound()
     startGame(2);
   };
 
   document.getElementById("level-3").onclick = function() {
     $("#menu").hide();
+    $(".game-intro").hide();
     $("#canvas").show("slow");
+    playSound()
     startGame(3);
   };
   document.getElementById("final-round").onclick = function() {
     $("#menu").hide();
     $("#canvas").show("slow");
+    $(".game-intro").hide();
+    playSound()
     startGame(4);
   };
   function startGame(level) {
