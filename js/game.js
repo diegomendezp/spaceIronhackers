@@ -219,6 +219,11 @@ Game.prototype.draw = function() {
   this.ctx.font = "30px sans-serif";
   this.ctx.fillStyle = "white";
   this.ctx.fillText("LIFES: " + this.player.lifes, 20, 50);
+  if(this.level == 4){
+    this.ctx.font = "30px sans-serif";
+  this.ctx.fillStyle = "white";
+  this.ctx.fillText("LIFES INVADER: " + this.invaders[0].lifes, this.canvas.width/2 - 100, 50);
+  }
 };
 
 Game.prototype.moveAll = function(delta) {
