@@ -222,7 +222,7 @@ Game.prototype.draw = function() {
   if(this.level == 4){
     this.ctx.font = "30px sans-serif";
   this.ctx.fillStyle = "white";
-  this.ctx.fillText("LIFES INVADER: " + this.invaders[0].lifes, this.canvas.width/2 - 100, 50);
+  this.ctx.fillText("INVADER LIFES: " + this.invaders[0].lifes, this.canvas.width/2 - 100, 50);
   }
 };
 
