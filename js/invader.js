@@ -91,7 +91,7 @@ Invader.prototype.shoot = function() {
       "invader"
     ));
   } else {
-    /*bullets.push(new Bullet(
+    bullets.push(new Bullet(
       this.game,
       this.x + this.w / 2,
       this.y + this.h,
@@ -100,7 +100,7 @@ Invader.prototype.shoot = function() {
       this.bulletAcc,
       "red",
       "invader"
-    ));*/
+    ));
     bullets.push(new Bullet(
       this.game,
       this.x + this.w,
