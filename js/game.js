@@ -312,14 +312,11 @@ Game.prototype.showLevel = function() {
 };
 
 Game.prototype.showGameOver = function() {
-  this.ctx.font = "40px sans-serif";
+  this.ctx.fillStyle ='rgba(0, 0, 0, .5)'
+  this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
+  this.ctx.font = "60px sans-serif";
   this.ctx.fillStyle = "white";
-  /*if(level == 4){
-    this.ctx.fillText("FINAL ROUND ", 350, this.canvas.height / 2);
-  }else{
-    this.ctx.fillText("LEVEL " + level, 400, this.canvas.height / 2);
-  }*/
-  this.ctx.fillText(" GAME OVER ", 400, this.canvas.height / 2);
+  this.ctx.fillText(" GAME OVER ", 325, this.canvas.height / 2);
 };
 
 Game.prototype.showWin = function() {
