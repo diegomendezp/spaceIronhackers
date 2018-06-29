@@ -8,7 +8,7 @@ body{
   text-align: center;
   padding: 0;
   /*margin-top: 25%;*/
-  margin: 25% auto;
+  margin: 25% auto 0 auto;
   /*background-color: black;*/
   background-image: url("../images/bg.png")
 }
