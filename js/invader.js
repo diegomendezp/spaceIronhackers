@@ -25,8 +25,10 @@ function Invader(game, x, y, w, h, player, type, bulletAcc, lifes) {
     this.dx=2;
     this.dy = 0.15
     this.img.src = "images/spaceship.png";
-  }
-
+  } /*else if (this.type == 5) {
+    this.bulletRadio = 10;
+    this.img.src = "images/invader4.png";
+  }*/
   this.x = x;
   this.y = y;
   this.bullet;

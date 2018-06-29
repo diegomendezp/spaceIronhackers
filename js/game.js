@@ -38,13 +38,27 @@ Game.prototype.start = function(delta) {
 };
 
 Game.prototype.gameOver = function() {
-  window.cancelAnimationFrame(this.id);
+  /*window.cancelAnimationFrame(this.id);
   if (confirm("GAME OVER. Play again?")) {
     this.reset();
     this.start.bind(this);
   } else {
     location.reload();
+  }*/
+  if (this.level == 1) {
+    this.showGameOver();
+    if (this.lose == 0) this.restartLevel();
+  } else if (this.level == 2) {
+    this.showGameOver();
+    if (this.lose == 0) this.restartLevel();
+  } else if(this.level == 3){
+    this.showGameOver();
+    if (this.lose == 0) this.restartLevel();
+  } else if(this.level == 4){
+    this.showGameOver()
+    if (this.lose == 0) this.restartLevel();
   }
+  this.lose++;
 };
 
 Game.prototype.youWin = function() {
@@ -61,7 +75,7 @@ Game.prototype.youWin = function() {
     if (this.win == 0) this.changeLevel();
   } else if(this.level == 4){
     if (this.win == 0){
-      alert("You pass all the levels");
+      alert("CONGRATULATIONS YOU WIN!!!");
       location.reload();
     }
   }
@@ -79,6 +93,7 @@ Game.prototype.reset = function() {
   this.generateInvaders();
   this.generateObstacles();
   this.win = 0;
+  this.lose = 0;
 };
 
 Game.prototype.levels = function() {
@@ -146,8 +161,10 @@ Game.prototype.generateInvaders = function() {
   }
   for (var i = 0; i < this.invadersNumber; i++) {
     for (var j = 0; j < this.rows; j++) {
+      /*var number = Math.floor(Math.random()* 5)
+      if(number == 4)number++*/
         this.invaders.push(
-          new Invader(this, pos1, 70 * j, w ,h, this.player, j, this.invaderAcc, lifes)
+          new Invader(this, pos1, 75 * j, w ,h, this.player, j, this.invaderAcc, lifes)
         ); 
     }
     if(this.level == 4){
@@ -243,10 +260,10 @@ Game.prototype.isCollisionInvader = function() {
         invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
         invaders.splice(invaders.indexOf(invader), 1);
       } else {
-        invader.lifes--;
+        if(invader.lifes != 0)invader.lifes--;
         invader.player.bullets.splice(invader.player.bullets.indexOf(invader.bullet),1);
         if(invader.lifes == 0){
-          this.youWin();
+          invaders.splice(invaders.indexOf(invader), 1);
         }
       }
     }
@@ -260,9 +277,9 @@ Game.prototype.isCollisionPlayer = function() {
       1
     );
     if(this.level != 4){
-      this.player.lifes--;
+      if(this.player.lifes != 0) this.player.lifes--;
     } else {
-      this.gameOver()
+      if(this.player.lifes != 0)this.player.lifes -= PLAYERLIFES
     } 
   }
 };
@@ -294,6 +311,23 @@ Game.prototype.showLevel = function() {
   }
 };
 
+Game.prototype.showGameOver = function() {
+  this.ctx.font = "40px sans-serif";
+  this.ctx.fillStyle = "white";
+  /*if(level == 4){
+    this.ctx.fillText("FINAL ROUND ", 350, this.canvas.height / 2);
+  }else{
+    this.ctx.fillText("LEVEL " + level, 400, this.canvas.height / 2);
+  }*/
+  this.ctx.fillText(" GAME OVER ", 400, this.canvas.height / 2);
+};
+
+Game.prototype.showWin = function() {
+  this.ctx.font = "40px sans-serif";
+  this.ctx.fillStyle = "white";
+  this.ctx.fillText("CONGRATULATIONS YOU WIN! ", 200, this.canvas.height / 2);
+};
+
 Game.prototype.changeLevel = function() {
   setTimeout(
     function() {
@@ -302,6 +336,25 @@ Game.prototype.changeLevel = function() {
       this.start.bind(this);
     }.bind(this),
     3000
+  );
+};
+
+Game.prototype.restartLevel = function() {
+  setTimeout(
+    function() {
+      this.reset();
+      this.start.bind(this);
+    }.bind(this),
+    3000
+  );
+};
+
+Game.prototype.finishGame = function() {
+  setTimeout(
+    function() {
+      location.reload()
+    }.bind(this),
+    5000
   );
 };
 
